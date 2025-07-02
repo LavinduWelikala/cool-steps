@@ -69,7 +69,7 @@ public class StepEventServiceImpl implements StepEventService {
     }
 
     @Override
-    public List<StepEvent> findByAllIByDeviceId(Long deviceId) throws DeviceNotFoundException {
+    public List<StepEvent> findByAllIByDeviceId(Long deviceId) {
 
         return stepEventRepository.findAllByDeviceId(deviceId);
     }

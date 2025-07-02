@@ -33,7 +33,7 @@ public class StepEventController {
     }
     
     @GetMapping(value = "/events")
-    public List<StepEventResponse> getAll() throws DeviceNotFoundException {
+    public List<StepEventResponse> getAll()  {
 
         List<StepEvent> stepEvents = stepEventService.findAll();
 
@@ -51,7 +51,7 @@ public class StepEventController {
     }
 
     @GetMapping(value = "/events/{device-id}")
-    public List<StepEventResponse> getAllByDeviceId(@PathVariable("device-id") Long deviceId) throws DeviceNotFoundException {
+    public List<StepEventResponse> getAllByDeviceId(@PathVariable("device-id") Long deviceId)  {
 
         List<StepEvent> stepEvents = stepEventService.findByAllIByDeviceId(deviceId);
 

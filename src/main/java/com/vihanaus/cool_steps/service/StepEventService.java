@@ -12,5 +12,5 @@ public interface StepEventService {
 
     List<StepEvent> findAll();
 
-    List<StepEvent> findByAllIByDeviceId(Long deviceId) throws DeviceNotFoundException;
+    List<StepEvent> findByAllIByDeviceId(Long deviceId) ;
 }
