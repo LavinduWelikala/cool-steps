@@ -38,4 +38,14 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.save(user);
     }
+
+    @Override
+    public User findById(Long id) throws NotFoundException {
+
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User with id " + id + " not found"));
+
+        return existingUser;
+    }
+
+
 }

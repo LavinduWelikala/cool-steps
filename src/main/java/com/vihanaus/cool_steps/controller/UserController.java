@@ -8,9 +8,10 @@ import com.vihanaus.cool_steps.model.User;
 import com.vihanaus.cool_steps.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -32,5 +33,22 @@ public class UserController {
         userResponse.setCreatedAt(user.getCreatedAt());
 
         return userResponse;
+    }
+
+    @GetMapping(value = "/users/{id}")
+    public UserResponse getById(@PathVariable Long id) throws NotFoundException {
+
+        User user = userService.findById(id);
+
+        UserResponse userResponse = new UserResponse();
+
+        userResponse.setId(user.getId());
+        userResponse.setUserId(user.getUserId());
+        userResponse.setName(user.getName());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setCreatedAt(user.getCreatedAt());
+
+        return userResponse;    
+
     }
 }

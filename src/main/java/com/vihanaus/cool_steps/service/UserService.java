@@ -8,4 +8,6 @@ import com.vihanaus.cool_steps.model.User;
 public interface UserService {
 
     User create(UserDTO userDTO) throws UserAlreadyExistException;
+
+    User findById(Long id) throws NotFoundException;
 }
