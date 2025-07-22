@@ -70,7 +70,7 @@ public class UserController {
 
             userResponses.add(userResponse);
         }
-        
+
         return userResponses;
     }
 
