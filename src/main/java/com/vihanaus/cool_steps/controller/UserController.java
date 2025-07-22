@@ -10,9 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @AllArgsConstructor
 public class UserController {
@@ -48,7 +45,22 @@ public class UserController {
         userResponse.setEmail(user.getEmail());
         userResponse.setCreatedAt(user.getCreatedAt());
 
-        return userResponse;    
+        return userResponse;
+    }
 
+    @PutMapping(value = "/users/{id}")
+    public UserResponse updateById(@PathVariable Long id, @RequestBody @Validated UserDTO userDTO) throws NotFoundException {
+
+        User user = userService.updateById(id, userDTO);
+
+        UserResponse userResponse = new UserResponse();
+
+        userResponse.setId(user.getId());
+        userResponse.setUserId(user.getUserId());
+        userResponse.setName(user.getName());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setCreatedAt(user.getCreatedAt());
+
+        return userResponse;
     }
 }

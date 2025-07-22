@@ -10,4 +10,6 @@ public interface UserService {
     User create(UserDTO userDTO) throws UserAlreadyExistException;
 
     User findById(Long id) throws NotFoundException;
+
+    User updateById(Long id, UserDTO userDTO) throws NotFoundException;
 }

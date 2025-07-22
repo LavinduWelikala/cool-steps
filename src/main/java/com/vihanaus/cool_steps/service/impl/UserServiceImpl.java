@@ -47,5 +47,23 @@ public class UserServiceImpl implements UserService {
         return existingUser;
     }
 
+    @Override
+    public User updateById(Long id, UserDTO userDTO) throws NotFoundException {
+
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User with id " + id + " not found"));
+
+        LocalDate updatedAt = LocalDate.now();
+
+        User updateUser = new User();
+
+        updateUser.setId(existingUser.getId());
+        updateUser.setUserId(userDTO.getUserId());
+        updateUser.setName(userDTO.getName());
+        updateUser.setEmail(userDTO.getEmail());
+        updateUser.setCreatedAt(updatedAt);
+
+        return userRepository.save(updateUser);
+    }
+
 
 }
