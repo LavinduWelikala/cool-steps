@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,6 +46,12 @@ public class UserServiceImpl implements UserService {
         User existingUser = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User with id " + id + " not found"));
 
         return existingUser;
+    }
+
+    @Override
+    public List<User> findAll() {
+
+        return userRepository.findAll();
     }
 
     @Override

@@ -10,6 +10,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class UserController {
@@ -46,6 +49,29 @@ public class UserController {
         userResponse.setCreatedAt(user.getCreatedAt());
 
         return userResponse;
+    }
+
+    @GetMapping(value = "/users")
+    public List<UserResponse> getAll() {
+
+        List<User> users = userService.findAll();
+
+        List<UserResponse> userResponses = new ArrayList<>();
+
+        for (User user : users) {
+
+            UserResponse userResponse = new UserResponse();
+
+            userResponse.setId(user.getId());
+            userResponse.setUserId(user.getUserId());
+            userResponse.setName(user.getName());
+            userResponse.setEmail(user.getEmail());
+            userResponse.setCreatedAt(user.getCreatedAt());
+
+            userResponses.add(userResponse);
+        }
+        
+        return userResponses;
     }
 
     @PutMapping(value = "/users/{id}")
