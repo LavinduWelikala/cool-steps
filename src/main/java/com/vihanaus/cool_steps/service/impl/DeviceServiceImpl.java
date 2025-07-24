@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,5 +43,11 @@ public class DeviceServiceImpl implements DeviceService {
         device.setUser(setUser);
 
         return deviceRepository.save(device);
+    }
+
+    @Override
+    public List<Device> findAll() {
+
+        return deviceRepository.findAll();
     }
 }

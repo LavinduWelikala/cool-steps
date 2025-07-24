@@ -8,10 +8,10 @@ import com.vihanaus.cool_steps.model.Device;
 import com.vihanaus.cool_steps.service.DeviceService;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -35,5 +35,29 @@ public class DeviceController {
         deviceResponse.setUserId(device.getUser().getId());
 
         return deviceResponse;
+    }
+
+    @GetMapping(value = "/devices")
+    public List<DeviceResponse> findAll() {
+
+        List<Device> devices = deviceService.findAll();
+
+        List<DeviceResponse> deviceResponses = new ArrayList<>();
+
+        for (Device device : devices) {
+
+            DeviceResponse deviceResponse = new DeviceResponse();
+
+            deviceResponse.setId(device.getId());
+            deviceResponse.setName(device.getName());
+            deviceResponse.setSerialNumber(device.getSerialNumber());
+            deviceResponse.setModel(device.getModel());
+            deviceResponse.setManufacturer(device.getManufacturer());
+            deviceResponse.setRegisteredAt(device.getRegisteredAt());
+            deviceResponse.setUserId(device.getUser().getId());
+
+            deviceResponses.add(deviceResponse);
+        }
+        return deviceResponses;
     }
 }
