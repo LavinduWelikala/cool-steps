@@ -78,4 +78,27 @@ public class DeviceController {
 
         return deviceResponse;
     }
+
+    @PutMapping(value = "/devices/{device-id}")
+    public DeviceResponse updateById(@PathVariable("device-id") Long deviceId, @RequestBody DeviceDTO deviceDTO) throws DeviceNotFoundException {
+
+        Device device = deviceService.updateById(deviceId, deviceDTO);
+
+        DeviceResponse deviceResponse = new DeviceResponse();
+
+        deviceResponse.setId(device.getId());
+        deviceResponse.setName(device.getName());
+        deviceResponse.setSerialNumber(device.getSerialNumber());
+        deviceResponse.setModel(device.getModel());
+        deviceResponse.setManufacturer(device.getManufacturer());
+        deviceResponse.setRegisteredAt(device.getRegisteredAt());
+        deviceResponse.setUserId(device.getUser().getId());
+
+        return deviceResponse;
+    }
+
+    @DeleteMapping(value = "/devices/{device-id}")
+    public void deleteById(@PathVariable("device-id") Long deviceId) {
+        deviceService.deleteById(deviceId);
+    }
 }

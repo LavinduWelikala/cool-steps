@@ -14,4 +14,8 @@ public interface DeviceService {
     List<Device> findAll();
 
     Device findById(Long deviceId) throws DeviceNotFoundException;
+
+    Device updateById(Long deviceId, DeviceDTO deviceDTO) throws DeviceNotFoundException;
+
+    void deleteById(Long deviceId);
 }

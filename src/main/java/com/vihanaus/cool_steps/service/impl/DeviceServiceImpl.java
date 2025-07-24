@@ -58,4 +58,29 @@ public class DeviceServiceImpl implements DeviceService {
 
         return device;
     }
+
+    @Override
+    public Device updateById(Long deviceId, DeviceDTO deviceDTO) throws DeviceNotFoundException {
+
+        Device existingDevice = deviceRepository.findById(deviceId).orElseThrow(() -> new DeviceNotFoundException("Device with id " + deviceId + " not found"));
+
+        LocalDate updatedAt = LocalDate.now();
+
+        Device device = new Device();
+
+        device.setName(deviceDTO.getName());
+        device.setSerialNumber(deviceDTO.getSerialNumber());
+        device.setModel(deviceDTO.getModel());
+        device.setManufacturer(deviceDTO.getManufacturer());
+        device.setRegisteredAt(updatedAt);
+        device.setUser(existingDevice.getUser());
+
+        return deviceRepository.save(device);
+    }
+
+    @Override
+    public void deleteById(Long deviceId) {
+
+        deviceRepository.deleteById(deviceId);
+    }
 }
