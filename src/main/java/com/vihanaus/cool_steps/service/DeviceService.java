@@ -12,4 +12,6 @@ public interface DeviceService {
     Device create(Long userId, DeviceDTO deviceDTO) throws DuplicateDeviceFoundException, DeviceNotFoundException;
 
     List<Device> findAll();
+
+    Device findById(Long deviceId) throws DeviceNotFoundException;
 }

@@ -60,4 +60,22 @@ public class DeviceController {
         }
         return deviceResponses;
     }
+
+    @GetMapping(value = "/devices/{device-id}")
+    public DeviceResponse getById (@PathVariable("device-id") Long deviceId) throws DeviceNotFoundException {
+
+        Device device = deviceService.findById(deviceId);
+
+        DeviceResponse deviceResponse = new DeviceResponse();
+
+        deviceResponse.setId(device.getId());
+        deviceResponse.setName(device.getName());
+        deviceResponse.setSerialNumber(device.getSerialNumber());
+        deviceResponse.setModel(device.getModel());
+        deviceResponse.setManufacturer(device.getManufacturer());
+        deviceResponse.setRegisteredAt(device.getRegisteredAt());
+        deviceResponse.setUserId(device.getUser().getId());
+
+        return deviceResponse;
+    }
 }

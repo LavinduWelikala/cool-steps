@@ -50,4 +50,12 @@ public class DeviceServiceImpl implements DeviceService {
 
         return deviceRepository.findAll();
     }
+
+    @Override
+    public Device findById(Long deviceId) throws DeviceNotFoundException {
+
+        Device device = deviceRepository.findById(deviceId).orElseThrow(() -> new DeviceNotFoundException("Device with id " + deviceId + " not found"));
+
+        return device;
+    }
 }
