@@ -20,4 +20,7 @@ public class StepEvent {
     @ManyToOne
     private DailySummary dailySummary;
 
+    @ManyToOne
+    private Device device;
+
 }
