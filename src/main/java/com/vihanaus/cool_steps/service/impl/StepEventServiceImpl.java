@@ -43,12 +43,10 @@ public class StepEventServiceImpl implements StepEventService {
                     return dailySummaryRepository.save(newSummary);
                 });
 
-        Float newSteps = 1f; // For example: add 1 per event, or random/sensor-derived
-        // Optional: derive step delta from previous event
+        Float newSteps = 1f; 
         StepEvent lastEvent = stepEventRepository.findTopByDeviceOrderByTimestampDesc(existingDevice).orElse(null);
 
         if (lastEvent != null) {
-            // You could do more sophisticated calculations here
             newSteps = lastEvent.getStepCount() + 1;
         }
         StepEvent stepEvent = new StepEvent();
