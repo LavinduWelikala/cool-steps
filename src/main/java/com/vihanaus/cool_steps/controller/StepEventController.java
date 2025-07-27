@@ -16,8 +16,8 @@ public class StepEventController {
 
     private StepEventService stepEventService;
 
-    @PostMapping(value = "/step-events")
-    public StepEventResponse create(@RequestParam("device-id") Long deviceId) throws DeviceNotFoundException {
+    @PostMapping(value = "/events")
+    public StepEventResponse createEvent(@RequestParam("device-id") Long deviceId) throws DeviceNotFoundException {
 
         StepEvent stepEvent = stepEventService.create(deviceId);
 

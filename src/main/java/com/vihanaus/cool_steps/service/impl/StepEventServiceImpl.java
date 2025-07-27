@@ -43,7 +43,6 @@ public class StepEventServiceImpl implements StepEventService {
                     return dailySummaryRepository.save(newSummary);
                 });
 
-        //counting steps
         Float newSteps = 1f; 
 
         StepEvent lastEvent = stepEventRepository.findTopByDeviceOrderByTimestampDesc(existingDevice).orElse(null);
@@ -51,7 +50,6 @@ public class StepEventServiceImpl implements StepEventService {
         if (lastEvent != null) {
             newSteps = lastEvent.getStepCount() + 1;
         }
-        //saving them
         StepEvent stepEvent = new StepEvent();
         stepEvent.setDevice(existingDevice);
         stepEvent.setStepCount(newSteps);
