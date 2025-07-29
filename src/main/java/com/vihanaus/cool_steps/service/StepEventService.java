@@ -7,4 +7,6 @@ import com.vihanaus.cool_steps.model.StepEvent;
 public interface StepEventService {
 
     StepEvent create(Long deviceId) throws DeviceNotFoundException;
+
+    StepEvent findById(Long deviceId) throws DeviceNotFoundException;
 }

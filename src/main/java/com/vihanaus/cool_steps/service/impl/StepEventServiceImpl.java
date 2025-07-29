@@ -62,4 +62,12 @@ public class StepEventServiceImpl implements StepEventService {
 
         return stepEvent;
     }
+
+    @Override
+    public StepEvent findById(Long deviceId) throws DeviceNotFoundException {
+
+        StepEvent stepEvent = stepEventRepository.findById(deviceId).orElseThrow(() -> new DeviceNotFoundException("Device with id " + deviceId + " not found"));
+
+        return stepEvent;
+    }
 }
