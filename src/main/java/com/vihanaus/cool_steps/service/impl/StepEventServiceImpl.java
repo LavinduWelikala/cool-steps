@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -62,10 +63,14 @@ public class StepEventServiceImpl implements StepEventService {
     }
 
     @Override
-    public StepEvent findById(Long deviceId) throws DeviceNotFoundException {
+    public List<StepEvent> findAll() {
 
-        StepEvent stepEvent = stepEventRepository.findById(deviceId).orElseThrow(() -> new DeviceNotFoundException("Device with id " + deviceId + " not found"));
+        return stepEventRepository.findAll();
+    }
 
-        return stepEvent;
+    @Override
+    public List<StepEvent> findByAllIByDeviceId(Long deviceId) throws DeviceNotFoundException {
+
+        return stepEventRepository.findAllByDeviceId(deviceId);
     }
 }

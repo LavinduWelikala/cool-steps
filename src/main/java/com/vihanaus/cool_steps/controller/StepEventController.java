@@ -9,6 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class StepEventController {
@@ -29,17 +32,39 @@ public class StepEventController {
         return stepEventResponse;
     }
     
+    @GetMapping(value = "/events")
+    public List<StepEventResponse> getAll() throws DeviceNotFoundException {
+
+        List<StepEvent> stepEvents = stepEventService.findAll();
+
+        List<StepEventResponse> stepEventResponses = new ArrayList<>();
+
+        for (StepEvent stepEvent : stepEvents) {
+            StepEventResponse stepEventResponse = new StepEventResponse();
+            stepEventResponse.setStepEventId(stepEvent.getId());
+            stepEventResponse.setStepCount(stepEvent.getStepCount());
+            stepEventResponse.setTimestamp(stepEvent.getTimestamp());
+            stepEventResponse.setDeviceId(stepEvent.getDevice().getId());
+            stepEventResponses.add(stepEventResponse);
+        }
+        return stepEventResponses;
+    }
+
     @GetMapping(value = "/events/{device-id}")
-    public StepEventResponse getById(@PathVariable("device-id") Long deviceId) throws DeviceNotFoundException {
+    public List<StepEventResponse> getAllByDeviceId(@PathVariable("device-id") Long deviceId) throws DeviceNotFoundException {
 
-        StepEvent stepEvent = stepEventService.findById(deviceId);
+        List<StepEvent> stepEvents = stepEventService.findByAllIByDeviceId(deviceId);
 
-        StepEventResponse stepEventResponse = new StepEventResponse();
-        stepEventResponse.setStepEventId(stepEvent.getId());
-        stepEventResponse.setStepCount(stepEvent.getStepCount());
-        stepEventResponse.setTimestamp(stepEvent.getTimestamp());
-        stepEventResponse.setDeviceId(stepEvent.getDevice().getId());
+        List<StepEventResponse> stepEventResponses = new ArrayList<>();
 
-        return stepEventResponse;
+        for (StepEvent stepEvent : stepEvents) {
+            StepEventResponse stepEventResponse = new StepEventResponse();
+            stepEventResponse.setStepEventId(stepEvent.getId());
+            stepEventResponse.setStepCount(stepEvent.getStepCount());
+            stepEventResponse.setTimestamp(stepEvent.getTimestamp());
+            stepEventResponse.setDeviceId(stepEvent.getDevice().getId());
+            stepEventResponses.add(stepEventResponse);
+        }
+        return stepEventResponses;
     }
 }
