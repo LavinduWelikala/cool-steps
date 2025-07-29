@@ -9,5 +9,4 @@ import java.util.Optional;
 
 public interface StepEventRepository extends JpaRepository<StepEvent, Long> {
 
-    Optional<StepEvent> findTopByDeviceOrderByTimestampDesc(Device device);
 }

@@ -10,6 +10,7 @@ import com.vihanaus.cool_steps.repository.DailySummaryRepository;
 import com.vihanaus.cool_steps.repository.DeviceRepository;
 import com.vihanaus.cool_steps.repository.StepEventRepository;
 import com.vihanaus.cool_steps.service.StepEventService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,13 @@ public class StepEventServiceImpl implements StepEventService {
     private DailySummaryRepository dailySummaryRepository;
 
     @Override
-    public StepEvent create(Long deviceId) throws DeviceNotFoundException {
+    @Transactional
+    public StepEvent create(Long deviceId, StepEventDTO stepEventDTO) throws DeviceNotFoundException {
 
-        Device existingDevice = deviceRepository.findById(deviceId).orElseThrow(() -> new DeviceNotFoundException("Device with id " + deviceId + " not found"));
+        Device device = deviceRepository.findById(deviceId)
+                .orElseThrow(() -> new DeviceNotFoundException("Device with ID " + deviceId + " not found"));
 
-        User user = existingDevice.getUser();
+        User user = device.getUser();
 
         LocalDate today = LocalDate.now();
         LocalDateTime now = LocalDateTime.now();
@@ -43,21 +46,16 @@ public class StepEventServiceImpl implements StepEventService {
                     return dailySummaryRepository.save(newSummary);
                 });
 
-        Float newSteps = 1f; 
-
-        StepEvent lastEvent = stepEventRepository.findTopByDeviceOrderByTimestampDesc(existingDevice).orElse(null);
-
-        if (lastEvent != null) {
-            newSteps = lastEvent.getStepCount() + 1;
-        }
         StepEvent stepEvent = new StepEvent();
-        stepEvent.setDevice(existingDevice);
-        stepEvent.setStepCount(newSteps);
+        stepEvent.setDevice(device);
         stepEvent.setTimestamp(now);
+        stepEvent.setStepCount(stepEventDTO.getStepCount());
+        stepEvent.setDailySummary(summary);
 
         stepEventRepository.save(stepEvent);
 
-        summary.setSteps(summary.getSteps() + newSteps);
+        Float updatedSteps = summary.getSteps() + stepEventDTO.getStepCount();
+        summary.setSteps(updatedSteps);
         dailySummaryRepository.save(summary);
 
         return stepEvent;

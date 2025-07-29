@@ -1,10 +1,12 @@
 package com.vihanaus.cool_steps.controller;
 
+import com.vihanaus.cool_steps.controller.request.StepEventDTO;
 import com.vihanaus.cool_steps.controller.response.StepEventResponse;
 import com.vihanaus.cool_steps.exception.DeviceNotFoundException;
 import com.vihanaus.cool_steps.model.StepEvent;
 import com.vihanaus.cool_steps.service.StepEventService;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,9 +16,9 @@ public class StepEventController {
     private StepEventService stepEventService;
 
     @PostMapping(value = "/events")
-    public StepEventResponse createEvent(@RequestParam("device-id") Long deviceId) throws DeviceNotFoundException {
+    public StepEventResponse createEvent(@RequestBody @Validated StepEventDTO stepEventDTO, @RequestParam("device-id") Long deviceId) throws DeviceNotFoundException {
 
-        StepEvent stepEvent = stepEventService.create(deviceId);
+        StepEvent stepEvent = stepEventService.create(deviceId, stepEventDTO);
 
         StepEventResponse stepEventResponse = new StepEventResponse();
         stepEventResponse.setStepEventId(stepEvent.getId());

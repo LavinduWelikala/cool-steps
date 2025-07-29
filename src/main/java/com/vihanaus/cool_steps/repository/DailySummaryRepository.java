@@ -10,5 +10,4 @@ import java.util.Optional;
 public interface DailySummaryRepository extends JpaRepository<DailySummary, Long> {
 
     Optional<DailySummary> findByUserAndDate(User user, LocalDate date);
-
 }
