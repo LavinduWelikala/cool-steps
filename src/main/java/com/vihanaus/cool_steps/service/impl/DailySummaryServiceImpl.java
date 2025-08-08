@@ -17,6 +17,7 @@ public class DailySummaryServiceImpl implements DailySummaryService {
     @Override
     public List<DailySummary> findAllByUser(Long userId) {
 
+        //find all the daily summaries of the database by the userId
         return dailySummaryRepository.findAllByUser(userId);
     }
 }

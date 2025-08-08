@@ -71,6 +71,7 @@ public class StepEventServiceImpl implements StepEventService {
     @Override
     public List<StepEvent> findByAllIByDeviceId(Long deviceId) {
 
+        //find the step events by the deviceId
         return stepEventRepository.findAllByDeviceId(deviceId);
     }
 }
